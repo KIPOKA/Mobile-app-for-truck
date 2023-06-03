@@ -43,7 +43,7 @@ const HomeScreen = () => {
                 location: details.geometry.location,
                 description: data.description,
               }));
-              dispatch(setDestination(null))
+              dispatch(setDestination(null));
             }}
             fetchDetails={true}
             returnKeyType={"search"}
