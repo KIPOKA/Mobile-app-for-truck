@@ -38,13 +38,17 @@ const HomeScreen = () => {
               }
             }
             // set the query to google maps
-            onPress={(data, details=null) => {
-              dispatch(setOrigin({
-                location: details.geometry.location,
-                description: data.description,
-              }));
-              dispatch(setDestination(null));
+            onPress={(data, details = null) => {
+              if (details) {
+                const { geometry: { location } = {}, description } = details;
+                if (location && description) {
+                  dispatch(setOrigin({ location, description }));
+                }
+              }
             }}
+            
+            
+            
             fetchDetails={true}
             returnKeyType={"search"}
             enablePoweredByContainer={false}
