@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , SafeAreaView} from 'react-native';
+import { Platform, StyleSheet} from 'react-native';
 //importt the provider from redux
 import { Provider } from 'react-redux';
 
@@ -10,7 +10,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { KeyboardAvoidingView } from 'react-native';
+import tw from 'tailwind-react-native-classnames';
 //Set up REDUX
 
 export default function App() {
@@ -19,6 +20,10 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
       <SafeAreaProvider>
+        <KeyboardAvoidingView 
+        behavior={Platform.OS ==="ios" ? "padding":"height"}
+        keyboardVerticalOffset={Platform.OS ==="ios" ? -64: 0 }
+        style={tw `flex-1`}>
         <Stack.Navigator>
           <Stack.Screen
             name="HomeScreen"
@@ -37,6 +42,8 @@ export default function App() {
             } 
           />
         </Stack.Navigator>
+        </KeyboardAvoidingView>
+        
       {/* <HomeScreen/> */}
       </SafeAreaProvider> 
       </NavigationContainer>
