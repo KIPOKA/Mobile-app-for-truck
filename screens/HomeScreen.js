@@ -1,7 +1,7 @@
 import { StyleSheet, View , Image, SafeAreaView, ImageBackground} from 'react-native'; 
 import React from 'react';
 import tw from "tailwind-react-native-classnames";
-import IconImage from '../assets/icon2.png';
+import IconImage from '../assets/truck.png';
 import NavOption from "../components/NavOption";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GOOGLE_MAPS_APIKEY} from "@env";

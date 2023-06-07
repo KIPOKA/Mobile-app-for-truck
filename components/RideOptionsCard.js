@@ -7,6 +7,8 @@ import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import IconImage from '../assets/truck.png';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectTravelTimeInformation } from '../slices/navSlice';
 
 const data = [
   {
@@ -29,19 +31,21 @@ const data = [
   },
 ];
 
-const RideOptions = () => {
+  const RideOptions = () => {
   const navigation = useNavigation();
   const [selected, setSelected]=useState(null);
+  const travelTimeInformation = useSelector(selectTravelTimeInformation);
+  const SURGE_CHARGE_RATE =1.5;
 
   return (
     <SafeAreaView style={tw`bg-white flex-grow`}>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('NavigationCard')}
+          onPress={() => navigation.navigate("NavigationCard")}
           style={tw`absolute top-3 left-5 z-50 p-3 rounded-full`}>
           <Icon name="chevron-left" type="fontawesome" />
         </TouchableOpacity>
-        <Text style={tw`text-center py-5 text-xl`}>Select a Ride</Text>
+        <Text style={tw`text-center py-5 text-xl`}>Select a Ride -{travelTimeInformation?.distance.text}</Text>
       </View>
 
       
@@ -65,10 +69,16 @@ const RideOptions = () => {
 
                 <View style={tw `-ml-4`}>
                   <Text style={tw `text-xl font-semibold`}>{title}</Text>
-                  <Text>Travel time...</Text>
+                  <Text>{travelTimeInformation?.duration?.text} travel time</Text>
                 </View>
                 <Text style={tw `text-xl `}>
-                    R20.00
+                    {new Intl.NumberFormat(`en-gb`,{
+                      style:'currency',
+                      currency:"GBP"
+                    }).format(
+                      (travelTimeInformation?.duration?.value * 
+                        SURGE_CHARGE_RATE * multiplier)/100
+                    )}
                 </Text>
               </TouchableOpacity>
             );
